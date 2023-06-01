@@ -33,3 +33,5 @@ Github repository --- https://github.com/Oseid/python-reverse-shell.git
 * Added extraction of google passwords
 * Added encryption of files
 * Added decryption of files
+
+##### This script is for education purpose only am not liable for any damages
