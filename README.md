@@ -9,6 +9,7 @@
 ## Installation
 
 For installation open git bash if on windows to simply clone it.
+
 git clone https://github.com/Annor-Gyimah/REVERSE-SHELL-SINGLE-CLIENT.git
 * First open the CMD and run "pip install -r requirements.txt"
 e.g pip install -r requirements.txt
